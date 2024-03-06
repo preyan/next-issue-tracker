@@ -1,5 +1,6 @@
 import { Badge, Button, Flex, Table } from "@radix-ui/themes";
 
+import IssueStatusBadge from "../components/IssueStatusBadge";
 import Link from "next/link";
 import React from "react";
 import prisma from "@/prisma/client";
@@ -33,16 +34,12 @@ const IssuesPage = async () => {
                 {/* <Link href={`/issues/${issue.id}`}>{issue.title}</Link> */}
                 {issue.title}
                 <div className="block sm:hidden">
-                  <Flex gap="2">
-                    <Badge color="blue">{issue.status}</Badge>
-                    <Badge color="green">
-                      {issue.createdAt.toDateString()}
-                    </Badge>
-                  </Flex>
+                  <IssueStatusBadge status={issue.status} />
+                  <span className="p-2">{issue.createdAt.toDateString()}</span>
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden sm:table-cell">
-                {issue.status}
+                <IssueStatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className="hidden sm:table-cell">
                 {issue.createdAt.toDateString()}
