@@ -1,5 +1,6 @@
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import IssueToolbar from "./IssueToolbar";
+import Link from "next/link";
 import React from "react";
 import { Table } from "@radix-ui/themes";
 import delay from "delay";
@@ -27,8 +28,7 @@ const IssuesPage = async () => {
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-                {/* <Link href={`/issues/${issue.id}`}>{issue.title}</Link> */}
-                {issue.title}
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                 <div className="block sm:hidden">
                   <IssueStatusBadge status={issue.status} />
                   <span className="p-2">{issue.createdAt.toDateString()}</span>
