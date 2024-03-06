@@ -13,6 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { AiFillExclamationCircle } from "react-icons/ai";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 import axios from "axios";
 import { createIssueSchema } from "@/app/validationSchemas";
 import dynamic from "next/dynamic";
@@ -42,11 +43,12 @@ const NewIssuePage = () => {
     register,
     control,
     handleSubmit,
-    formState: { isValid, errors },
+    formState: { errors },
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   return (
     <div className="max-w-xl">
@@ -63,9 +65,11 @@ const NewIssuePage = () => {
         className="space-y-3"
         onSubmit={handleSubmit(async (formData) => {
           try {
+            setIsSubmitting(true);
             await axios.post("/api/issues", formData);
             router.push("/issues");
           } catch (error) {
+            setIsSubmitting(false);
             setError("An unexpected error occurred. Please try again.");
           }
         })}
@@ -85,7 +89,9 @@ const NewIssuePage = () => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button disabled={isValid}>Submit New Issue</Button>
+        <Button disabled={isSubmitting}>
+          Submit New Issue {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
