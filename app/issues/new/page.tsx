@@ -7,12 +7,12 @@ import {
   CalloutIcon,
   CalloutRoot,
   CalloutText,
-  Text,
   TextField,
 } from "@radix-ui/themes";
 import { Controller, useForm } from "react-hook-form";
 
 import { AiFillExclamationCircle } from "react-icons/ai";
+import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 import { createIssueSchema } from "@/app/validationSchemas";
 import dynamic from "next/dynamic";
@@ -42,16 +42,16 @@ const NewIssuePage = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid, errors },
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState<string>("");
 
   return (
-    <div className="max-w-xl space-y-3 ">
+    <div className="max-w-xl">
       {error && (
-        <CalloutRoot color="red">
+        <CalloutRoot color="red" className="mb-5">
           <CalloutIcon>
             <AiFillExclamationCircle />
           </CalloutIcon>
@@ -76,11 +76,7 @@ const NewIssuePage = () => {
             {...register("title")}
           ></TextField.Input>
         </TextField.Root>
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
@@ -88,12 +84,8 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
-        <Button>Submit New Issue</Button>
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        <Button disabled={isValid}>Submit New Issue</Button>
       </form>
     </div>
   );
