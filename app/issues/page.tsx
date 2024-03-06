@@ -1,6 +1,6 @@
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import IssueToolbar from "./IssueToolbar";
-import Link from "next/link";
+import Link from "@/app/components/Link";
 import React from "react";
 import { Table } from "@radix-ui/themes";
 import delay from "delay";
