@@ -49,11 +49,11 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
       setIsSubmitting(true);
       //If issue exists, it means we are editing an existing issue.
       if (issue) {
-        await axios.patch("/api/issues" + issue.id, formData);
+        await axios.patch("/api/issues/" + issue.id, formData);
       } else {
         await axios.post("/api/issues", formData);
       }
-      router.push("/issues");
+      router.push("/issues/list");
       router.refresh();
     } catch (error) {
       setIsSubmitting(false);

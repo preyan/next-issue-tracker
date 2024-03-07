@@ -1,4 +1,4 @@
-import IssueStatusBadge from "../components/IssueStatusBadge";
+import IssueStatusBadge from "../../components/IssueStatusBadge";
 import IssueToolbar from "./IssueToolbar";
 import Link from "@/app/components/Link";
 import React from "react";
