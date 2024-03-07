@@ -54,13 +54,19 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const onSubmit = async (formData: IssueFormType) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/api/issues", formData);
+      //If issue exists, it means we are editing an existing issue.
+      if (issue) {
+        await axios.patch("/api/issues" + issue.id, formData);
+      } else {
+        await axios.post("/api/issues", formData);
+      }
       router.push("/issues");
     } catch (error) {
       setIsSubmitting(false);
       setError("An unexpected error occurred. Please try again.");
     }
   };
+
   return (
     <div className="max-w-xl">
       {error && (
@@ -91,7 +97,8 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button disabled={isSubmitting}>
-          Submit Issue {isSubmitting && <Spinner />}
+          {issue ? "Update Issue" : "Submit New Issue"}&nbsp;
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
