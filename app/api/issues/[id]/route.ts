@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import delay from "delay";
 import { issueSchema } from "@/app/validationSchemas";
 import primsa from "@/prisma/client";
 
@@ -40,6 +41,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  //TODO - remove this delay
+  await delay(2000);
+
   const issue = await primsa.issue.findUnique({
     where: { id: params.id },
   });
