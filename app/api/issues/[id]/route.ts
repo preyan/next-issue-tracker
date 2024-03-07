@@ -35,3 +35,22 @@ export async function PATCH(
 
   return NextResponse.json(updatedIssue);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const issue = await primsa.issue.findUnique({
+    where: { id: params.id },
+  });
+
+  if (!issue) {
+    return NextResponse.json({ error: "Issue not found" }, { status: 404 });
+  }
+
+  await primsa.issue.delete({
+    where: { id: params.id },
+  });
+
+  return NextResponse.json({ message: "Issue deleted" });
+}
