@@ -11,10 +11,10 @@ const LoadingIssueDetailsPage = () => {
         <Skeleton />
         <Flex gap="3" my="2">
           <Skeleton width="5rem" />
-          <Skeleton width="8rem" />
+          <Skeleton width="10rem" />
         </Flex>
         <Card className="prose mt-3">
-          <Skeleton count={4} />
+          <Skeleton count={5} />
         </Card>
       </Box>
     </div>

@@ -3,12 +3,10 @@ import IssueToolbar from "./IssueToolbar";
 import Link from "@/app/components/Link";
 import React from "react";
 import { Table } from "@radix-ui/themes";
-import delay from "delay";
 import prisma from "@/prisma/client";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
-  await delay(1000);
 
   return (
     <div>
