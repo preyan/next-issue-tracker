@@ -49,4 +49,6 @@ const IssuesPage = async () => {
   );
 };
 
+export const dynamic = "force-dynamic"; //Forces the page to be not static (cached)
+
 export default IssuesPage;
